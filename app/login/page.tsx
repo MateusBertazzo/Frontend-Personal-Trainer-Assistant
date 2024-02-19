@@ -60,7 +60,7 @@ export default function Login() {
 
   // desestruturação dos valores do form
   const {username, password} = formValue;
-  
+
   return (
     <div className='box-signup'>
       <form className='form-signup' onSubmit={handleSubmit}>
@@ -71,6 +71,8 @@ export default function Login() {
           placeholder='Usuario ou Email'
           onChange={handleChange} 
           value={username}
+          minLength={8}
+          maxLength={150}
           />
         <div className='div-password'>
           <input
@@ -79,6 +81,8 @@ export default function Login() {
             placeholder='Senha'
             onChange={handleChange}
             value={password}
+            minLength={8}
+            maxLength={150}
             />
         <a href="/">Esqueci minha senha.</a>
       </div>
