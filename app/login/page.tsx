@@ -11,6 +11,7 @@ export default function Login() {
     username: "",
     password: "",
   });
+  const [responseMessage, setResponseMessage] = useState("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -20,6 +21,24 @@ export default function Login() {
         [name]: value,
       };
     });
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const response = await fetch('url_do_seu_backend/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formValue),
+      });
+      const data = await response.json();
+      setResponseMessage(data.message);
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      setResponseMessage("Erro ao fazer login");
+    }
   };
 
   const {username, password} = formValue;
