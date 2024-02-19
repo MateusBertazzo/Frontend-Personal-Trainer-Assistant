@@ -11,7 +11,8 @@ export default function Login() {
     username: "",
     password: "",
   });
-  const [responseMessage, setResponseMessage] = useState("");
+  const [responseData, setResponseData] = useState("");
+  const [responseError, setResponseError] = useState("")
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -25,19 +26,33 @@ export default function Login() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // request para o backend
     try {
-      const response = await fetch('url_do_seu_backend/login', {
+      const response = await fetch('http://localhost:8080/users/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formValue),
       });
+      
+      // response do backend
       const data = await response.json();
-      setResponseMessage(data.message);
+
+      // se o response não for ok, seta mensagem de erro para exibir para o usuario e lança um erro
+      if (!response.ok) {
+        setResponseError(data.message);
+        throw new Error(data.message);
+      }
+
+      // se o response for ok, seta o token no localStorage e seta guarda data no estado
+      localStorage.setItem('token', data.response);
+      setResponseData(data);
+
     } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      setResponseMessage("Erro ao fazer login");
+      setResponseData("Erro ao fazer login. Tente novamente.");
+      console.log('error', responseError);
     }
   };
 
