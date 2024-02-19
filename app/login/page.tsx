@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Logo from '../../public/logo.png';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
-import decodeToken from '../utils/token/decodedToken';
+import getTokenAndDecode from '../utils/localStorage/getLocalStorage';
 
 export default function Login() {
 
