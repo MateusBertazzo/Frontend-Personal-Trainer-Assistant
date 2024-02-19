@@ -2,6 +2,7 @@ import decodeToken from '../token/decodedToken'; // Importe a função decodeTok
 
 // Função para obter o token do localStorage e decodificá-lo
 const getTokenAndDecode = (): object | null => {
+    
 try {
     // Obtenha o token armazenado no localStorage
     const token = localStorage.getItem('token');

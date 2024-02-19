@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Logo from '../../public/logo.png';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
-import getTokenAndDecode from '../utils/localStorage/getLocalStorage';
 
 export default function Login() {
 
@@ -12,7 +11,7 @@ export default function Login() {
     username: "",
     password: "",
   });
-  const [responseData, setResponseData] = useState("");
+
   const [responseError, setResponseError] = useState("")
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -49,9 +48,8 @@ export default function Login() {
 
       // se o response for ok, seta o token no localStorage e guarda requestData no estado
       localStorage.setItem('token', data.response);
-      setResponseData(data);
     } catch (error) {
-      setResponseData("Erro ao fazer login. Tente novamente.");
+      responseError
       console.log('error', responseError);
     }
   };
