@@ -44,7 +44,7 @@ export default function Login() {
   const {username, password} = formValue;
   return (
     <div className='box-signup'>
-      <form className='form-signup'>
+      <form className='form-signup' onSubmit={handleSubmit}>
         <Image src={Logo} alt="Logo" width={220} />
         <input
           type="text"
