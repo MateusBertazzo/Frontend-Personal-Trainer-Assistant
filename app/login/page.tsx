@@ -7,13 +7,16 @@ import { useState } from 'react';
 
 export default function Login() {
 
+  // estado para guardar os valores do form
   const [formValue, setFormValue] = useState({
     username: "",
     password: "",
   });
 
+  // estado para guardar a mensagem de erro do backend
   const [responseError, setResponseError] = useState("")
 
+  // função para atualizar o estado com os valores do form
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormValue((prevState) => {
@@ -24,6 +27,7 @@ export default function Login() {
     });
   };
 
+  // função para enviar os dados do form para o backend
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -54,7 +58,9 @@ export default function Login() {
     }
   };
 
+  // desestruturação dos valores do form
   const {username, password} = formValue;
+  
   return (
     <div className='box-signup'>
       <form className='form-signup' onSubmit={handleSubmit}>
