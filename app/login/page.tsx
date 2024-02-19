@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Logo from '../../public/logo.png';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
+import decodeToken from '../utils/token/decodedToken';
 
 export default function Login() {
 
@@ -46,10 +47,9 @@ export default function Login() {
         throw new Error(data.message);
       }
 
-      // se o response for ok, seta o token no localStorage e seta guarda data no estado
+      // se o response for ok, seta o token no localStorage e guarda requestData no estado
       localStorage.setItem('token', data.response);
       setResponseData(data);
-
     } catch (error) {
       setResponseData("Erro ao fazer login. Tente novamente.");
       console.log('error', responseError);
@@ -66,14 +66,16 @@ export default function Login() {
           name="username"
           placeholder='Usuario ou Email'
           onChange={handleChange} 
-          value={username} />
+          value={username}
+          />
         <div className='div-password'>
           <input
             type="password"
             name="password"
             placeholder='Senha'
             onChange={handleChange}
-            value={password} />
+            value={password}
+            />
         <a href="/">Esqueci minha senha.</a>
       </div>
         <button>Entrar</button> 
