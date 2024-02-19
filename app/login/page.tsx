@@ -29,15 +29,15 @@ export default function Login() {
         <Image src={Logo} alt="Logo" width={220} />
         <input
           type="text"
-          placeholder='Username'
           name="username"
+          placeholder='Usuario ou Email'
           onChange={handleChange} 
           value={username} />
         <div className='div-password'>
           <input
             type="password"
             name="password"
-            placeholder='Password'
+            placeholder='Senha'
             onChange={handleChange}
             value={password} />
         <a href="/">Esqueci minha senha.</a>

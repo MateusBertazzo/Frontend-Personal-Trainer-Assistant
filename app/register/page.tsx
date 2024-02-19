@@ -25,30 +25,40 @@ export default function Register() {
   const { email, username, password, confirmPassword } = formValue;
 
   return (
-    <div>
-      <input 
-        type="email" 
-        name="email" 
-        onChange={handleChange} 
-        value={email} />
-      <br />
-      <input
-        type="text"
-        name="username"
-        onChange={handleChange}
-        value={username} />
-      <br />
-      <input
-        type="password"
-        name="password"
-        onChange={handleChange}
-        value={password} />
+    <div className='box-signup'>
+      <form className='form-signup'>
+        <h1>Cadastre-se</h1> 
 
-      <input
-        type="password"
-        name="confirmPassword"
-        onChange={handleChange}
-        value={confirmPassword} />
+        <input
+            type="text"
+            name="username"
+            placeholder='Usuario'
+            onChange={handleChange}
+            value={username} />
+
+        <input 
+            type="email" 
+            name="email" 
+            placeholder='Email'
+            onChange={handleChange} 
+            value={email} />
+        
+        <input
+            type="password"
+            name="password"
+            placeholder='Senha'
+            onChange={handleChange}
+            value={password} />
+        
+        <input
+            type="password"
+            name="confirmPassword"
+            placeholder='Confirmar Senha'
+            onChange={handleChange}
+            value={confirmPassword} />
+        
+        <button>Cadastrar</button>
+        </form>
     </div>
   );
 }
