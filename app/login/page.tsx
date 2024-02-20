@@ -50,7 +50,7 @@ export default function Login() {
         throw new Error(data.message);
       }
 
-      // se o response for ok, seta o token no localStorage e guarda requestData no estado
+      // se o response for ok, seta o token no localStorage
       localStorage.setItem('token', data.response);
     } catch (error) {
       responseError
