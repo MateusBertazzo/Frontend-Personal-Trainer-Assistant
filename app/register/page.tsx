@@ -2,8 +2,11 @@
 
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Register() {
+  const route = usePathname();
 
   const [formValue, setFormValue] = useState({
     email: "",
@@ -87,7 +90,6 @@ export default function Register() {
       if (!response.ok) {
         throw new Error('Erro ao enviar os dados');
       }
-
       // Aqui você pode lidar com a resposta do backend, se necessário
       console.log('Dados enviados com sucesso');
     } catch (error) {
@@ -134,8 +136,11 @@ export default function Register() {
             placeholder='Confirmar Senha'
             onChange={handleChange}
             value={confirmPassword} />
+
+        <button>
+          Cadastrar
+        </button>    
         
-        <button>Cadastrar</button>
         </form>
     </div>
   );
