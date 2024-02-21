@@ -4,9 +4,14 @@ import Image from 'next/image';
 import Logo from '../../public/logo.png';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
+import Loading from '../components/Loading';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 export default function Login() {
 
+  const route = useRouter();
+  const path = usePathname();
   // estado para guardar os valores do form
   const [formValue, setFormValue] = useState({
     username: "",
@@ -15,6 +20,7 @@ export default function Login() {
 
   // estado para guardar a mensagem de erro do backend
   const [responseError, setResponseError] = useState("")
+  const [loading, setLoading] = useState(false);
 
   // função para atualizar o estado com os valores do form
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,8 +34,7 @@ export default function Login() {
   };
 
   // função para enviar os dados do form para o backend
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
 
     // request para o backend
     try {
@@ -40,18 +45,30 @@ export default function Login() {
         },
         body: JSON.stringify(formValue),
       });
-      
+
+      // seta loading para true
+      setLoading(true);
       // response do backend
       const data = await response.json();
 
+
       // se o response não for ok, seta mensagem de erro para exibir para o usuario e lança um erro
       if (!response.ok) {
+        setLoading(false);
         setResponseError(data.message);
         throw new Error(data.message);
       }
 
       // se o response for ok, seta o token no localStorage
       localStorage.setItem('token', data.response);
+
+      route.push('/home');
+
+      // se o path for /home, seta loading para false
+      if (path === '/home') {
+        setLoading(false);
+      }
+
     } catch (error) {
       responseError
       console.log('error', responseError);
@@ -63,7 +80,7 @@ export default function Login() {
 
   return (
     <div className='box-signup'>
-      <form className='form-signup' onSubmit={handleSubmit}>
+      <form className='form-signup' >
         <Image src={Logo} alt="Logo" width={220} />
         <input
           type="text"
@@ -71,7 +88,7 @@ export default function Login() {
           placeholder='Usuario ou Email'
           onChange={handleChange} 
           value={username}
-          minLength={8}
+          minLength={5}
           maxLength={150}
           />
         <div className='div-password'>
@@ -81,12 +98,13 @@ export default function Login() {
             placeholder='Senha'
             onChange={handleChange}
             value={password}
-            minLength={8}
+            minLength={5}
             maxLength={150}
             />
         <a href="/">Esqueci minha senha.</a>
       </div>
-        <button>Entrar</button> 
+        <button type='button' onClick={handleSubmit}>Entrar</button>
+        <p>{loading ? <Loading /> : ''}</p>
       </form>
     </div>
   );

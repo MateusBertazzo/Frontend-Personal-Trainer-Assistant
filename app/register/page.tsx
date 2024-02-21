@@ -1,13 +1,16 @@
 'use client'
 
+import { useRouter } from 'next/navigation';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import Loading from '../components/Loading';
+
 
 export default function Register() {
-  const route = usePathname();
-
+  const route = useRouter()
+  const path = usePathname()
+  
   const [formValue, setFormValue] = useState({
     email: "",
     username: "",
@@ -17,6 +20,7 @@ export default function Register() {
   const [emailError, setEmailError] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -57,9 +61,7 @@ export default function Register() {
     return formValue.password.length >= 8 && formValue.password === formValue.confirmPassword;
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSubmit = async () => {
     // valida email
     if (!validateEmail()) {
       setEmailError('Email inválido');
@@ -87,13 +89,24 @@ export default function Register() {
         body: JSON.stringify(formValue),
       });
 
+      // seta loading para true
+      setLoading(true);
+      
+
       if (!response.ok) {
+        setLoading(false);
         throw new Error('Erro ao enviar os dados');
       }
-      // Aqui você pode lidar com a resposta do backend, se necessário
+
+      route.push('/login');
+
+      if (path === '/login') {
+        setLoading(false);
+      }
+
       console.log('Dados enviados com sucesso');
     } catch (error) {
-      console.error('Erro ao enviar os dados:', error);
+      throw new Error('Erro ao enviar os dados');
     }
   };
 
@@ -101,7 +114,7 @@ export default function Register() {
 
   return (
     <div className='box-signup'>
-      <form className='form-signup' onSubmit={handleSubmit}>
+      <form className='form-signup'>
         <h1>Cadastre-se</h1> 
 
         <input
@@ -137,10 +150,11 @@ export default function Register() {
             onChange={handleChange}
             value={confirmPassword} />
 
-        <button>
+        <button type="button" onClick={handleSubmit}>
           Cadastrar
-        </button>    
-        
+        </button>
+        <p>{loading ? <Loading /> : ''}</p>
+
         </form>
     </div>
   );
