@@ -1,6 +1,3 @@
-import Image from 'next/image';
-import fakeData from '../fakecards/fakeData';
-
 function CardStudents({ name, img }: any) {
     return (
         <div 

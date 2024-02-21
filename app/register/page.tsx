@@ -3,10 +3,13 @@
 import { useRouter } from 'next/navigation';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Loading from '../components/Loading';
 
 
 export default function Register() {
   const route = useRouter()
+  const path = usePathname()
   
   const [formValue, setFormValue] = useState({
     email: "",
@@ -17,6 +20,7 @@ export default function Register() {
   const [emailError, setEmailError] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -85,15 +89,24 @@ export default function Register() {
         body: JSON.stringify(formValue),
       });
 
+      // seta loading para true
+      setLoading(true);
+      
+
       if (!response.ok) {
+        setLoading(false);
         throw new Error('Erro ao enviar os dados');
       }
 
       route.push('/login');
-      // Aqui você pode lidar com a resposta do backend, se necessário
+
+      if (path === '/login') {
+        setLoading(false);
+      }
+
       console.log('Dados enviados com sucesso');
     } catch (error) {
-      console.error('Erro ao enviar os dados:', error);
+      throw new Error('Erro ao enviar os dados');
     }
   };
 
@@ -140,7 +153,8 @@ export default function Register() {
         <button type="button" onClick={handleSubmit}>
           Cadastrar
         </button>
-        
+        <p>{loading ? <Loading /> : ''}</p>
+
         </form>
     </div>
   );
