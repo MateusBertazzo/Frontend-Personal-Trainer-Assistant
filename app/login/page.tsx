@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Logo from '../../public/logo.png';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
+import decodeToken from '../utils/token/decodedToken';
 
 export default function Login() {
 
@@ -52,6 +53,8 @@ export default function Login() {
 
       // se o response for ok, seta o token no localStorage
       localStorage.setItem('token', data.response);
+
+      console.log(decodeToken(data.response));
     } catch (error) {
       responseError
       console.log('error', responseError);
@@ -71,7 +74,7 @@ export default function Login() {
           placeholder='Usuario ou Email'
           onChange={handleChange} 
           value={username}
-          minLength={8}
+          minLength={5}
           maxLength={150}
           />
         <div className='div-password'>
@@ -81,7 +84,7 @@ export default function Login() {
             placeholder='Senha'
             onChange={handleChange}
             value={password}
-            minLength={8}
+            minLength={5}
             maxLength={150}
             />
         <a href="/">Esqueci minha senha.</a>
