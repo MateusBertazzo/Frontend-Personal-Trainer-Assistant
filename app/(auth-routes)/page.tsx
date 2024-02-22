@@ -5,7 +5,8 @@ import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import Logo from '../../public/logo.png';
 import Image from 'next/image';
-import Loading from '../../components/Loading';
+import Button from "@/components/Button";
+import InputText from "@/components/InputText";
 
 export default function Home() {
   const [email, setEmail] = useState<string>('')
@@ -47,38 +48,22 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen">
-      <form className="w-[400px] flex flex-col gap-6">
+      <form className="w-[400px] flex flex-col gap-6 px-12">
         <Image src={Logo} alt="Logo" width={220} className="flex self-center"/>
-        <input 
-          className="h-12 rounded-md p-2 bg-transparent border border-gray-300"
-          type="text" 
-          name="email" 
-          placeholder="Digite seu e-mail ou usuário"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        
+        <InputText type="text" placeholder="Digite seu e-mail ou usuário" value={email} onChange={(e) => setEmail(e.target.value)} style="" />
 
-        <div className="flex flex-col">
-          <input 
-            className="flex flex-col h-12 rounded-md p-2 bg-transparent border border-gray-300"
-            type="password" 
-            name="password" 
-            placeholder="Digite sua senha"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <div className="flex flex-col gap-2">
+          <InputText type="password" placeholder="Digite sua senha" value={password} onChange={(e) => setPassword(e.target.value)} style="" />
 
-          <a className="self-center" href="/">Esqueci minha senha.</a>
-
+          <a className="self-center text-[var(--orange)]" href="/">Esqueci minha senha.</a>
         </div>
         
+        <div className="flex flex-col gap-2">
+          <Button text="Entrar" onClick={handleSubmit} style="bg-[var(--orange)]" loading={loading} />
 
-        <button
-          type="button"
-          className="h-12 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400"
-          onClick={handleSubmit}
-        >
-          Entrar
-        </button>
-        <p>{loading ? <Loading /> : ''}</p>
+          <p className="text-center">Não possui um conta? <a className="text-[var(--orange)]" href="/register">Cadastre-se</a></p>
+        </div>
       </form>
     </div>
   )
