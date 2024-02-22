@@ -17,15 +17,15 @@ const nextAuthOptions: NextAuthOptions = {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        email: credentials?.email,
+                        username: credentials?.email,
                         password: credentials?.password
                     }),
                 });
 
-                const data = await response.json();
+                const user = await response.json();
 
-                if (data && response.ok) {
-                    return data
+                if (user && response.ok) {
+                    return user
                 }
 
                 return null
@@ -34,10 +34,21 @@ const nextAuthOptions: NextAuthOptions = {
     ],
     
     pages: {
-        signIn: "/login",
-    }
+        signIn: "/",
+    },
+
+    callbacks: {
+        async jwt({token, user}) {
+            user && (token.user = user)
+            return token
+        },
+        async session({ session, token }) {
+            session = token.user as any
+            return session;
+        },
+    },
 }
 
 const handler = NextAuth(nextAuthOptions);
 
-export { handler as GET, handler as POST}
+export { handler as GET, handler as POST, nextAuthOptions };
