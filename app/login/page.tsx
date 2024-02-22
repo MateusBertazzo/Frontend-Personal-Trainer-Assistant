@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Logo from '../../public/logo.png';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
-import Loading from '../components/Loading';
+import Loading from '../../components/Loading';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 
