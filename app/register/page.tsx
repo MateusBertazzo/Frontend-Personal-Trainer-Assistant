@@ -5,6 +5,8 @@ import { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Loading from '../../components/Loading';
+import InputText from '@/components/InputText';
+import Button from '@/components/Button';
 
 
 export default function Register() {
@@ -114,48 +116,21 @@ export default function Register() {
   const { email, username, password, confirmPassword } = formValue;
 
   return (
-    <div className='box-signup'>
-      <form className='form-signup'>
-        <h1>Cadastre-se</h1> 
-
-        <input
-            type="text"
-            name="username"
-            placeholder='Usuario'
-            onChange={handleChange}
-            value={username} 
-            style={{ border: usernameError ? '2px solid red' : '' ,  }}
-            />
-
-        <input 
-            type="text" 
-            name="email" 
-            placeholder='Email'
-            onChange={handleChange} 
-            value={email} 
-            style={{ border: emailError ? '2px solid red' : '' }}
-            />
-        <input
-            type="password"
-            name="password"
-            placeholder='Senha'
-            onChange={handleChange}
-            value={password} 
-            style={{ border: passwordError ? '2px solid red' : '' }}
-            />
+    <div className='w-screen h-screen flex justify-center items-center'>
+      <form className='w-[400px] flex flex-col gap-6 px-12'>
+        <h1 className='text-3xl font-bold text-center'>Cadastre-se</h1> 
         
-        <input
-            type="password"
-            name="confirmPassword"
-            placeholder='Confirmar Senha'
-            onChange={handleChange}
-            value={confirmPassword} />
+        <InputText type='text' placeholder='Digite seu nome de usuário' value={username} onChange={handleChange} error={{ border: usernameError ? '2px solid red' : '' ,  }} />
 
-        <button type="button" onClick={handleSubmit}>
-          Cadastrar
-        </button>
-        <p>{loading ? <Loading /> : ''}</p>
+        <InputText type='text' placeholder='Digite seu e-mail' value={email} onChange={handleChange} error={{ border: emailError ? '2px solid red' : '' ,  }} />
 
+        <InputText type='password' placeholder='Sua senha' value={password} onChange={handleChange} error={{ border: passwordError ? '2px solid red' : '' ,  }} />
+        
+        <InputText type='password' placeholder='Confirme sua senha' value={confirmPassword} onChange={handleChange} error={{ border: passwordError ? '2px solid red' : '' ,  }} />
+
+        <Button text='Cadastrar' onClick={handleSubmit} />
+
+        <p className='text-center'>Já tem uma conta? <a href='/' className='text-[var(--orange)]'>Faça login.</a></p>
         </form>
     </div>
   );

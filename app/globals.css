@@ -28,13 +28,13 @@ body {
 
 /* HTML: <div class="loader"></div> */
 .loader {
-  width: 50px;
+  width: 35px;
   aspect-ratio: 1;
   border-radius: 50%;
   background: 
-    radial-gradient(farthest-side,#FF5C00 94%,#0000) top/8px 8px no-repeat,
-    conic-gradient(#0000 30%,#ff801f);
-  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);
+    radial-gradient(farthest-side,#ffffff 94%,#0000) top/6px 6px no-repeat,
+    conic-gradient(#0000 30%,#fdfdfd);
+  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 6px),#000 0);
   animation: l13 1s infinite linear;
 }
 @keyframes l13{ 
