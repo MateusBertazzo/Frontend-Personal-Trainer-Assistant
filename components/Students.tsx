@@ -1,5 +1,5 @@
 import CardStudents from "./CardStudents";
-import students from "../fakecards/fakeData";
+import students from "../app/fakecards/fakeData";
 
 function Students() {
     return (

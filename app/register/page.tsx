@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import Loading from '../components/Loading';
+import Loading from '../../components/Loading';
 
 
 export default function Register() {
@@ -106,6 +106,7 @@ export default function Register() {
 
       console.log('Dados enviados com sucesso');
     } catch (error) {
+      setLoading(false);
       throw new Error('Erro ao enviar os dados');
     }
   };
