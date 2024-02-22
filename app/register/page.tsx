@@ -106,6 +106,7 @@ export default function Register() {
 
       console.log('Dados enviados com sucesso');
     } catch (error) {
+      setLoading(false);
       throw new Error('Erro ao enviar os dados');
     }
   };

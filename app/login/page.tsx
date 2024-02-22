@@ -71,6 +71,7 @@ export default function Login() {
 
     } catch (error) {
       responseError
+      setLoading(false);
       console.log('error', responseError);
     }
   };
