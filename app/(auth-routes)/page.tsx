@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 
 export default function Home() {
   const [email, setEmail] = useState<string>('')
@@ -13,16 +13,19 @@ export default function Home() {
   async function handleSubmit() {
     try {
 
+      // request para o backend
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false
       })
-  
+      
+      // se o response não for ok, lança um erro
       if (!result) {
         throw new Error(result)
       }
       
+      // redireciona para a home
       router.replace('/home')      
       
     } catch (error) {

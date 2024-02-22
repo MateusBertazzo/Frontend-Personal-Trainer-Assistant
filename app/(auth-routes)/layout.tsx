@@ -10,6 +10,7 @@ interface PrivateLayoutProps {
 export default async function PrivateLayout({ children }: PrivateLayoutProps){
 	const session = await getServerSession(nextAuthOptions)
 
+	// se o usuario estiver logado, redireciona para a home
 	if (session) {
 		redirect('/home')
 	}

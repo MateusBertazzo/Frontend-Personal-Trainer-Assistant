@@ -4,7 +4,6 @@ import { MdAccountCircle } from "react-icons/md";
 
 function NavMenu() {
     return (
-        
         <nav className="w-screen h-16 border-b-2 flex justify-between px-2 py-2">
             <Image 
             src="/logo.png" 

@@ -10,7 +10,7 @@ const nextAuthOptions: NextAuthOptions = {
                 password: {  label: "Password", type: "password" }
             },
 
-            async authorize(credentials, req) {
+            async authorize(credentials, _req) {
                 const response = await fetch('http://localhost:8080/users/auth/login', {
                     method: 'POST',
                     headers: {
