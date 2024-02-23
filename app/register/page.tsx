@@ -34,6 +34,7 @@ const schema = z.object({
   path: ["confirmPassword"],
 });
 
+// Tipagem do formulário
 type FormProps = z.infer<typeof schema>;
 
 export default function Register() {
@@ -51,30 +52,30 @@ export default function Register() {
     resolver: zodResolver(schema),
   });
 
-  console.log(errors);
   const handleForm = async (data : FormProps) => {
 
-    console.log(data);
-      const response = await fetch('http://localhost:8080/users/sign-up', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+    const response = await fetch('http://localhost:8080/users/sign-up', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
 
-      setLoading(true);
+    // seta loading para true até que a requisição seja finalizada
+    setLoading(true);
 
-      if (response.ok) {
-        setLoading(false);
-        route.push('/');
-      }
+    // se response for ok redireciona para a home
+    if (response.ok) {
+      route.push('/');
+    }
 
-      if (path === '/') {
-        setLoading(false);
-      }
+    // se path for igual a /, seta loading para false
+    if (path === '/') {
+      setLoading(false);
+    }
 
-      console.log('Dados enviados com sucesso');
+    console.log('Dados enviados com sucesso');
   };
 
   return (
@@ -121,14 +122,7 @@ export default function Register() {
           {errors.confirmPassword && <span className='p-1 text-xs text-red-600'>{errors.confirmPassword.message}</span>}
         </div>
        
-        
         <Button text='Cadastra-se' loading={loading} style='bg-[var(--orange)]' type='submit' />
-        {/* <button 
-        type='submit' 
-        className='flex justify-center items-center h-12 rounded-md bg-[var(--orange)] hover:bg-orange-400 transition-all duration-500 ease-in-out font-bold text-white'
-        >
-        Cadastra-se
-        </button> */}
 
         <p className='text-center'>Já tem uma conta? <a href='/' className='text-[var(--orange)] font-bold'>Faça login.</a></p>
         </form>
