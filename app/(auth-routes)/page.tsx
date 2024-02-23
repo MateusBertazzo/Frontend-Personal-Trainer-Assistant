@@ -60,7 +60,7 @@ export default function Home() {
         </div>
         
         <div className="flex flex-col gap-2">
-          <Button text="Entrar" onClick={handleSubmit} style="bg-[var(--orange)]" loading={loading} />
+          <Button text="Entrar" onClick={handleSubmit} style="bg-[var(--orange)]" loading={loading} type="button" />
 
           <p className="text-center">Não possui um conta? <a className="text-[var(--orange)] font-bold" href="/register">Cadastre-se</a></p>
         </div>
