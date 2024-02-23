@@ -44,7 +44,7 @@ export default function Home() {
     } catch (error) {
       throw new Error("Erro ao fazer login")
     }
-} 
+}
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen">
