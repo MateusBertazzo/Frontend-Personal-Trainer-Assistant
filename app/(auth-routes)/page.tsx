@@ -56,13 +56,13 @@ export default function Home() {
         <div className="flex flex-col gap-2">
           <InputText type="password" placeholder="Digite sua senha" value={password} onChange={(e) => setPassword(e.target.value)} style="" />
 
-          <a className="self-center text-[var(--orange)]" href="/">Esqueci minha senha.</a>
+          <a className="self-center text-[var(--orange)] font-bold" href="/">Esqueci minha senha.</a>
         </div>
         
         <div className="flex flex-col gap-2">
           <Button text="Entrar" onClick={handleSubmit} style="bg-[var(--orange)]" loading={loading} />
 
-          <p className="text-center">Não possui um conta? <a className="text-[var(--orange)]" href="/register">Cadastre-se</a></p>
+          <p className="text-center">Não possui um conta? <a className="text-[var(--orange)] font-bold" href="/register">Cadastre-se</a></p>
         </div>
       </form>
     </div>
