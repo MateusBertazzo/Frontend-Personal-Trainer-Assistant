@@ -124,13 +124,13 @@ export default function Register() {
 
         <InputText type='text' placeholder='Digite seu e-mail' value={email} onChange={handleChange} error={{ border: emailError ? '2px solid red' : '' ,  }} />
 
-        <InputText type='password' placeholder='Sua senha' value={password} onChange={handleChange} error={{ border: passwordError ? '2px solid red' : '' ,  }} />
+        <InputText type='password' placeholder='Digite sua senha' value={password} onChange={handleChange} error={{ border: passwordError ? '2px solid red' : '' ,  }} />
         
         <InputText type='password' placeholder='Confirme sua senha' value={confirmPassword} onChange={handleChange} error={{ border: passwordError ? '2px solid red' : '' ,  }} />
 
         <Button text='Cadastrar' onClick={handleSubmit} />
 
-        <p className='text-center'>Já tem uma conta? <a href='/' className='text-[var(--orange)]'>Faça login.</a></p>
+        <p className='text-center'>Já tem uma conta? <a href='/' className='text-[var(--orange)] font-bold'>Faça login.</a></p>
         </form>
     </div>
   );
