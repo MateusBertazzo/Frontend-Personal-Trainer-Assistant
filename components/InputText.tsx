@@ -4,7 +4,9 @@ interface InputProps {
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     style?: string;
-    error?: { border: string; } | undefined;
+    error?: boolean;
+    helperText?: string;
+    label?: string;
 }
 
 function InputText({ type, placeholder, value, onChange, style }: InputProps) {
