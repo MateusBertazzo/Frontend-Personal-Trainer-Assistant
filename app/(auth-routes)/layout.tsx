@@ -10,6 +10,7 @@ interface PrivateLayoutProps {
 export default async function PrivateLayout({ children }: PrivateLayoutProps){
 	const session = await getServerSession(nextAuthOptions)
 
+	// Tentar fazer um try e esse iff seria o catch
 	if (!session) {
 		console.log('Usuário não está logado')
 	}
