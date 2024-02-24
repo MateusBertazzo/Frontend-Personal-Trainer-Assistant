@@ -5,7 +5,7 @@ import SearchBar from '../../../components/SearchBar';
 import Students from '../../../components/Students';
 import Footer from '../../../components/Footer';
 
-export default async function page() {
+export default function Home() {
     return (
         <div className='flex flex-col'>
             <NavMenu />
