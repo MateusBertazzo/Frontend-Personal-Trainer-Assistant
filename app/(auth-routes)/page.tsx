@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import decodedToken from "../utils/token/decodedToken";
 
 export default function Login() {
+
   // States
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -26,12 +27,12 @@ export default function Login() {
 
   // Se role do usuário for 1, redireciona para a página de home de personal(1 = personal, 2 = cliente)
   if (token?.role === 1) {
-        router.replace('/home')
+      router.replace('/home')
   }
 
   // Se role do usuário for 2, redireciona para a página de detail de cliente(1 = personal, 2 = cliente)
   if (token?.role === 2) {
-    router.replace('/detail')
+      router.replace('/detail')
   }
 
   async function handleSubmit() {
