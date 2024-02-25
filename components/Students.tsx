@@ -28,9 +28,8 @@ export default function Students() {
         const responseData = async () => {
             try {
                 
+                // se session ainda nao estiver carregada, nao faz o fetch
                 if (!session) {
-                    console.log("Sessão ainda não definida");
-                    // Sessão ainda não definida
                     return;
                 }
 
@@ -41,6 +40,7 @@ export default function Students() {
                     }
                 });
 
+                // se a resposta nao for ok, lanca um erro
                 if (!response.ok) {
                     throw new Error("Erro ao buscar alunos");
                 }
