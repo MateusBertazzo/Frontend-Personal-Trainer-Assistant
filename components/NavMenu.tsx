@@ -17,7 +17,7 @@ function NavMenu() {
             <Image 
             src="/logo.png" 
             alt="logo" 
-            width={100} 
+            width={100}
             height={100}
             />
             <div className="flex gap-2 items-center">
