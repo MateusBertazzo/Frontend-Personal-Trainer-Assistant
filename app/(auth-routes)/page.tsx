@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Logo from '../../public/logo.png';
 import Image from 'next/image';
 import Button from "@/components/Button";
