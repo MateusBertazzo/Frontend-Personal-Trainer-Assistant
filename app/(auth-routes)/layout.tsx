@@ -10,14 +10,15 @@ interface PrivateLayoutProps {
 export default async function PrivateLayout({ children }: PrivateLayoutProps){
 	const session = await getServerSession(nextAuthOptions)
 
+	// Decodificando o token
 	const token = decodedToken(session?.response as string)
-	console.log(token)
 
 	// Se o usuário for um personal(1), redireciona para a página de home
     if (session && token?.role === 1) {
         redirect("/home")
 	}
 
+	// Se o usuário for um cliente(2), redireciona para a página de detail
 	if (session && token?.role === 2) {
 		redirect("/detail")
 	}
