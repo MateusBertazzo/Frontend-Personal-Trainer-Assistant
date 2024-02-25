@@ -104,9 +104,9 @@ function SearchBar() {
                     {filteredData.map((result, index) => (
                         <li key={result.userId} className="flex flex-col text-center gap-1 py-2">
                             <div className="flex gap-2">
-                                <p className="flex"><CgProfile size={22} className="self-center cursor-pointer"/> {`${result.username}`}</p>
-                                <IoAddOutline size={18} className="self-center bg-green-600 rounded-full cursor-pointer" />
-                                <FiXCircle size={18} className="self-center bg-red-500 rounded-full cursor-pointer"/>
+                                <p className="flex"><CgProfile size={40} className="self-center cursor-pointer"/> {`${result.username}`}</p>
+                                <IoAddOutline size={30} className="self-center bg-green-600 rounded-full cursor-pointer" />
+                                <FiXCircle size={30} className="self-center bg-red-500 rounded-full cursor-pointer"/>
                             </div>
                         </li>
                     ))}
