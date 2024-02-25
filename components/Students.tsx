@@ -27,6 +27,13 @@ export default function Students() {
     useEffect(() => {
         const responseData = async () => {
             try {
+                
+                if (!session) {
+                    console.log("Sessão ainda não definida");
+                    // Sessão ainda não definida
+                    return;
+                }
+
                 const response = await fetch(`http://localhost:8080/personal/get-all/students-by-personal/${token?.userId}`, {
                     method: 'GET',
                     headers: {
@@ -34,20 +41,21 @@ export default function Students() {
                     }
                 });
 
-                const data = await response.json();
-
                 if (!response.ok) {
                     throw new Error("Erro ao buscar alunos");
                 }
 
+                const data = await response.json();
+
                 setStudents(data.response);
+
             } catch (error) {
-                throw new Error("Erro ao buscar alunos");
+                throw new Error("Erro ao buscar alunos CATCH");
             }
         }
 
         responseData();
-    }, [token?.userId, session?.response]);
+    }, [token?.userId, session]);
 
     return (
         <div className="flex flex-col gap-4">
