@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import DecodedToken from "../app/utils/token/decodedToken";
 
+// Interface para tipar o retorno da requisição
 interface Aluno {
     userId: number;
     username: string;
@@ -40,7 +41,7 @@ export default function Students() {
                     }
                 });
 
-                // se a resposta nao for ok, lanca um erro
+                // se a resposta nao for ok, lança um erro
                 if (!response.ok) {
                     throw new Error("Erro ao buscar alunos");
                 }
