@@ -13,16 +13,16 @@ function NavMenu() {
     const token = DecodedToken(session.response)
 
     return (
-        <nav className="w-screen h-16 border-b-2 flex justify-between px-2 py-2">
+        <nav className="w-screen h-24 border-b-2 flex justify-between items-center px-3 py-1">
             <Image 
             src="/logo.png" 
             alt="logo" 
-            width={80} 
+            width={100} 
             height={100}
             />
-            <div className="flex gap-1 items-center">
-                <p>{token?.username}</p>
-                <MdAccountCircle size={30} />
+            <div className="flex gap-2 items-center">
+                <p className="font-bold text-xl">{token?.username}</p>
+                <MdAccountCircle size={48} />
             </div>
         </nav>
     );
