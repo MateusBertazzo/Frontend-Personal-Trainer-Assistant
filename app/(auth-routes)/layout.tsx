@@ -9,25 +9,18 @@ interface PrivateLayoutProps {
 
 export default async function PrivateLayout({ children }: PrivateLayoutProps){
 	const session = await getServerSession(nextAuthOptions)
-	
-	// TODO: Essa verificação tem que ser feita no details do usuário
-	//? teste
-	//! não apagar
-	// if (!session) {
-	// 	console.log('Usuário não está logado')
-	// 	redirect('/')
-	// }
 
+	// Decodificando o token
 	const token = decodedToken(session?.response as string)
 
 	// Se o usuário for um personal(1), redireciona para a página de home
-    if (token?.role === 1) {
+    if (session && token?.role === 1) {
         redirect("/home")
 	}
 
-	// Se não, se o usuário for um cliente(2), redireciona para a página de Profile
-    if (token?.role === 2) {
-        redirect(`details/${token?.userId}`)
+	// Se o usuário for um cliente(2), redireciona para a página de detail
+	if (session && token?.role === 2) {
+		redirect("/detail")
 	}
 
 	return <>{children}</>
