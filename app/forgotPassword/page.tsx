@@ -84,7 +84,7 @@ export default function ForgotPassword() {
                         <p className='self-center'>{responseData?.success && <span className='p-1 text-sm font-bold text-green-600'>{responseData.message}</span>}</p>
                     </div>
                     
-                    <a className='self-center' href="/">Lembrou ? <span className='text-[var(--orange)] font-bold'>Faça login</span></a>
+                    <a className='self-center' href="/">Lembrou? <span className='text-[var(--orange)] font-bold'>Faça login</span></a>
                 </form>
         </div>
     );
