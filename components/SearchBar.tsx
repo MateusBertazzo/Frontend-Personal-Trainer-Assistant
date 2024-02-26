@@ -73,6 +73,7 @@ export default function SearchBar() {
         responseData();
     }, [token?.userId, session]);
 
+    // Método para associar aluno a um personal
     const handleClickAdd = async (personalId: number, alunoId: number) => {
         try {
              
@@ -101,6 +102,7 @@ export default function SearchBar() {
         }
     }
 
+    // Método para desassociar aluno a um personal
     const handleClickRemove = async (alunoId: number) => {
         try {
              
@@ -147,19 +149,28 @@ export default function SearchBar() {
                     placeholder="Buscar..."
                 />
             </div>
-    
+
             <div className="flex flex-col items-center gap-4">
-                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+                <ul className="flex flex-wrap">
                     {filteredData.map((result, index) => (
-                        <li key={result.userId} className="flex flex-col text-center gap-1 py-2">
-                            <div className="flex gap-3 items-center">
+                        <li key={result.userId} className="flex w-1/2 text-center gap-1 py-2">
+                            <div className="flex w-full gap-3 items-center">
                                 <div className="flex items-center">
                                     <CgProfile size={40} className="self-center cursor-pointer" />
                                     <p className="flex">{`${result.username}`}</p>
                                 </div>
-
-                                <IoMdAddCircle onClick={() => handleClickAdd(token?.userId as number, result.userId)} size={38} className="self-center text-green-600 rounded-full cursor-pointer" />
-                                <FiXCircle onClick={() => handleClickRemove(result.userId)} size={38} className="self-center text-red-500 rounded-full cursor-pointer" />
+                                
+                                <IoMdAddCircle
+                                    onClick={() => handleClickAdd(token?.userId as number, result.userId)}
+                                    size={38}
+                                    className="self-center text-green-600 rounded-full cursor-pointer"
+                                />
+                
+                                <FiXCircle
+                                    onClick={() => handleClickRemove(result.userId)}
+                                    size={38}
+                                    className="self-center text-red-500 rounded-full cursor-pointer"
+                                />
                             </div>
                         </li>
                     ))}
