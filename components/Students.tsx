@@ -56,7 +56,7 @@ export default function Students() {
         }
 
         responseData();
-    }, [token?.userId, session]);
+    }, [token?.userId, session, students]);
 
     return (
         <div className="flex flex-col gap-4">

@@ -22,7 +22,7 @@ interface User {
     objetivo: string | null;
 }
 
-function SearchBar() {
+export default function SearchBar() {
     // States
     const [students, setStudents] = useState<User[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -31,7 +31,7 @@ function SearchBar() {
     const { data: session } = useSession();
 
     // decodificando o token
-    const token = DecodedToken(session?.response as string)
+    const token = DecodedToken(session?.response as string);
     
     // Métodos
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,9 +70,62 @@ function SearchBar() {
                  throw new Error("Erro ao buscar alunos CATCH");
             }
         }
- 
         responseData();
     }, [token?.userId, session]);
+
+    const handleClickAdd = async (personalId: number, alunoId: number) => {
+        try {
+             
+            // se session ainda nao estiver carregada, nao faz o fetch
+           if (!session) {
+               return;
+           }
+           
+           // Fazendo a requisição
+           const response = await fetch(`http://localhost:8080/personal/${personalId}/associate-user/${alunoId}`, {
+               method: 'POST',
+               headers: {
+                   Authorization: `Bearer ${session?.response}`,
+               }
+           });
+
+            // se a resposta nao for ok, lança um erro
+           if (!response.ok) {
+               throw new Error("Erro ao associar aluno");
+           }
+           
+           // Data da resposta
+           const data = await response.json();
+        } catch (error) {
+            throw new Error("Erro ao associar aluno");
+        }
+    }
+
+    const handleClickRemove = async (alunoId: number) => {
+        try {
+             
+            // se session ainda nao estiver carregada, nao faz o fetch
+           if (!session) {
+               return;
+           }
+           
+           // Fazendo a requisição
+           const response = await fetch(`http://localhost:8080/personal/${alunoId}/dissociate-user`, {
+               method: 'POST',
+               headers: {
+                   Authorization: `Bearer ${session?.response}`,
+               }
+           });
+
+            // se a resposta nao for ok, lança um erro
+           if (!response.ok) {
+               throw new Error("Erro ao associar aluno");
+           }
+           
+        } catch (error) {
+            throw new Error("Erro ao associar aluno");
+        }
+    }
 
     // Filtrando os dados
     const filteredData = students.filter((student) => {
@@ -80,7 +133,7 @@ function SearchBar() {
         // Só retornara os alunos se o campo de não estiver vazio e se o nome do aluno for igual ao que foi digitado
         if (searchTerm.trim() !== '') {
             return student.username.toLowerCase().includes(searchTerm.toLowerCase()); 
-        }  
+        }
     }).slice(0, 4)
 
     return (
@@ -105,8 +158,8 @@ function SearchBar() {
                                     <p className="flex">{`${result.username}`}</p>
                                 </div>
 
-                                <IoMdAddCircle size={38} className="self-center text-green-600 rounded-full cursor-pointer" />
-                                <FiXCircle size={38} className="self-center text-red-500 rounded-full cursor-pointer" />
+                                <IoMdAddCircle onClick={() => handleClickAdd(token?.userId as number, result.userId)} size={38} className="self-center text-green-600 rounded-full cursor-pointer" />
+                                <FiXCircle onClick={() => handleClickRemove(result.userId)} size={38} className="self-center text-red-500 rounded-full cursor-pointer" />
                             </div>
                         </li>
                     ))}
@@ -115,5 +168,3 @@ function SearchBar() {
         </div>
     )
 }
-
-export default SearchBar;
