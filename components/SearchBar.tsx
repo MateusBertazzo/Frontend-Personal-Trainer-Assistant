@@ -4,22 +4,18 @@ import { useState, ChangeEvent } from "react";
 import { useSession } from "next-auth/react";
 import DecodedToken from "../app/utils/token/decodedToken";
 import Link from "next/link";
-import { IoAddOutline } from "react-icons/io5";
-import { IoAtOutline } from "react-icons/io5";
+import { IoMdAddCircle } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { FiXCircle } from "react-icons/fi";
 
-
-
-
-
+// Definindo a interface do usuário que é oque é retornado da requisição
 interface User {
     id: number;
     userId: number;
     personalId: number;
     username: string;
     email: string;
-    role: "ADMIN" | "PERSONAL" | "USER"; // Define um tipo para o campo 'role'
+    role: "ADMIN" | "PERSONAL" | "USER";
     foto: string | null;
     numeroTelefone: string | null;
     observacao: string | null;
@@ -85,10 +81,10 @@ function SearchBar() {
         if (searchTerm.trim() !== '') {
             return student.username.toLowerCase().includes(searchTerm.toLowerCase()); 
         }  
-    })
+    }).slice(0, 4)
 
     return (
-        <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-col items-center gap-4">
             <div className="flex relative">
                 <IoSearch size={28} className="absolute left-1 self-center text-gray-400" />
                 <input
@@ -98,24 +94,26 @@ function SearchBar() {
                     placeholder="Buscar..."
                 />
             </div>
-
-            <div className="flex gap-4">
-                <ul className="flex flex-wrap gap-4">
+    
+            <div className="flex flex-col items-center gap-4">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
                     {filteredData.map((result, index) => (
                         <li key={result.userId} className="flex flex-col text-center gap-1 py-2">
-                            <div className="flex gap-2">
-                                <p className="flex"><CgProfile size={40} className="self-center cursor-pointer"/> {`${result.username}`}</p>
-                                <IoAddOutline size={30} className="self-center bg-green-600 rounded-full cursor-pointer" />
-                                <FiXCircle size={30} className="self-center bg-red-500 rounded-full cursor-pointer"/>
+                            <div className="flex gap-3 items-center">
+                                <div className="flex items-center">
+                                    <CgProfile size={40} className="self-center cursor-pointer" />
+                                    <p className="flex">{`${result.username}`}</p>
+                                </div>
+
+                                <IoMdAddCircle size={38} className="self-center text-green-600 rounded-full cursor-pointer" />
+                                <FiXCircle size={38} className="self-center text-red-500 rounded-full cursor-pointer" />
                             </div>
                         </li>
                     ))}
                 </ul>
-            
             </div>
         </div>
-        
-    );
+    )
 }
 
 export default SearchBar;
