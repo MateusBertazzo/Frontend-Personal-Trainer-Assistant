@@ -4,15 +4,26 @@ import React from 'react';
 import Image from 'next/image';
 import Logo from '../../public/logo.png';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import Button from '@/components/Button';
 
+// Interface para tipar o retorno da requisição
+interface responseData {
+    success: boolean;
+    message: string;
+    response: string | null;
+}
 
 export default function ForgotPassword() {
-    const [email, setEmail] = React.useState('')
+
+    const [responseData, setResponseData] = useState<responseData>()
+    const [isLoading, setIsLoading] = useState(false);
 
     const { handleSubmit, register } = useForm();
 
-    const handleForm = async (data) => {
+    const handleForm = async (data: any) => {
         try {
+            setIsLoading(true);
             const response = await fetch('http://localhost:8080/email/send-email', {
                 method: 'POST',
                 headers: {
@@ -21,14 +32,19 @@ export default function ForgotPassword() {
                 body: JSON.stringify({to: data.email}),
             })
 
-            console.log(response)
-
             // se a resposta nao for ok, lança um erro
             if (!response.ok) {
+                setIsLoading(false);
                 throw new Error("Erro ao mandar E-mail de recuperação de senha");
             }
+            
+            const responseData = await response.json();
+            
+            setResponseData(responseData);
+
+            setIsLoading(false);
         } catch (error) {
-            throw new Error("Erro ao buscar mandar E-mail de recuperação de senha");
+            throw new Error("Erro ao buscar E-mail de recuperação de senha");
         }
     }
 
@@ -52,12 +68,17 @@ export default function ForgotPassword() {
                         className={`flex flex-col h-12 rounded-md p-2 bg-gray-100 border border-gray-300`}
                     />
 
-                    <button 
-                        type='submit'
-                        className='flex justify-center items-center h-12 rounded-md bg-[var(--orange)] hover:bg-orange-400 transition-all duration-500 ease-in-out font-bold text-white'>
-                            Enviar
-                    </button>
+                    <div className='flex flex-col gap-2'>
+                        <Button 
+                            text='Enviar' 
+                            loading={isLoading} 
+                            style='bg-[var(--orange)]' 
+                            type='submit' 
+                        />
 
+                        <p className='self-center'>{responseData?.success && <span className='p-1 text-sm font-bold text-green-600'>{responseData.message}</span>}</p>
+                    </div>
+                    
                     <a className='self-center' href="/">Lembrou ? <span className='text-[var(--orange)] font-bold'>Faça login</span></a>
                 </form>
         </div>
