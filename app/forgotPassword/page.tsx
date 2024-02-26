@@ -16,11 +16,16 @@ interface responseData {
 
 export default function ForgotPassword() {
 
+    // States
     const [responseData, setResponseData] = useState<responseData>()
     const [isLoading, setIsLoading] = useState(false);
 
+    // Hooks
     const { handleSubmit, register } = useForm();
 
+    // Métodos
+
+    // Função para enviar o email de recuperação de senha
     const handleForm = async (data: any) => {
         try {
             setIsLoading(true);
