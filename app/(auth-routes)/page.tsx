@@ -74,7 +74,7 @@ export default function Login() {
         <div className="flex flex-col gap-2">
           <InputText type="password" placeholder="Digite sua senha" value={password} onChange={(e) => setPassword(e.target.value)} style="" />
 
-          <a className="self-center text-[var(--orange)] font-bold" href="/">Esqueci minha senha.</a>
+          <a className="self-center text-[var(--orange)] font-bold" href="/passowrd">Esqueci minha senha.</a>
         </div>
         
         <div className="flex flex-col gap-2">
