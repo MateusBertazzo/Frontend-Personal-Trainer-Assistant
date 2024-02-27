@@ -54,6 +54,8 @@ export default function Register() {
 
   const handleForm = async (data : FormProps) => {
 
+    // seta loading para true até que a requisição seja finalizada
+    setLoading(true);
     const response = await fetch('http://localhost:8080/users/sign-up', {
       method: 'POST',
       headers: {
@@ -61,9 +63,6 @@ export default function Register() {
       },
       body: JSON.stringify(data),
     })
-
-    // seta loading para true até que a requisição seja finalizada
-    setLoading(true);
 
     // se response for ok redireciona para a home
     if (response.ok) {
