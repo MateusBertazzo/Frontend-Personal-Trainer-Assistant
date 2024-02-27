@@ -39,17 +39,10 @@ interface responseData {
 export default function ResetPassword() {
     // States
     const [loading, setLoading] = useState(false);
-    const [responseData, setResponseData] = useState<{success: boolean, message: string} | null>(null);
+    const [responseData, setResponseData] = useState<responseData>()
 
     // Hooks
     const searchParams = useSearchParams();
-
-    const token = searchParams.get('param') as string;
-
-    const tokenString = atob(token)
-
-    const tokenDecoded: DecodedToken = JSON.parse(tokenString);
-
     const router = useRouter();
     const path = usePathname();
     const {
@@ -61,6 +54,16 @@ export default function ResetPassword() {
         resolver: zodResolver(schema),
     });
 
+    // Pegando token da url
+    const token = searchParams.get('param') as string;
+
+    // Decodificando o token para pegar o email e o código de recuperação de senha do usuário
+    const tokenString = atob(token)
+
+    // Transformando o token decodificado em um objeto
+    const tokenDecoded: DecodedToken = JSON.parse(tokenString);
+
+    // Função para fazer a requisição no backend para redefinir a senha
     const handleForm = async (data : FormProps) => {
         try {
             setLoading(true);
@@ -77,20 +80,24 @@ export default function ResetPassword() {
                 }),
             })
 
+            // Guardando a resposta da requisição para usar na renderização do componente a mensagem de sucesso
             const responseData = await response.json();
             setResponseData(responseData);
             
+            // se response não for ok, lança um erro e seta Loading para false
             if (!response.ok) {
                 setLoading(false);
                 throw new Error('Erro ao redefinir senha');
             }
 
+            // Redireciona para a página de login em caso de sucesso
             router.push('/');
 
+            // se path for igual a /, seta loading para false
             if (path === '/') {
                 setLoading(false);
             }
-            
+
         } catch (error) {
             throw new Error('Erro ao redefinir senha');
         }
@@ -120,7 +127,9 @@ export default function ResetPassword() {
                         placeholder="Confirme sua senha"
                         className={`flex flex-col h-12 rounded-md p-2 bg-gray-100 border border-gray-300`}
                     />
+                    
                     <p className='self-center'>{responseData?.success && <span className='p-1 text-sm font-bold text-green-600'>{responseData.message}</span>}</p>
+                    
                     {errors.confirmPassword && <span className='p-1 text-xs text-red-600'>{errors.confirmPassword.message}</span>}
                 </div>
 
