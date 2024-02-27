@@ -28,12 +28,12 @@ export default function Students() {
     useEffect(() => {
         const responseData = async () => {
             try {
-                
-                // se session ainda nao estiver carregada, nao faz o fetch
+
                 if (!session) {
                     return;
                 }
-
+                
+                // se session ainda nao estiver carregada, nao faz o fetch
                 const response = await fetch(`http://localhost:8080/personal/get-all/students-by-personal/${token?.userId}`, {
                     method: 'GET',
                     headers: {
@@ -56,7 +56,7 @@ export default function Students() {
         }
 
         responseData();
-    }, [token?.userId, session, students]);
+    }, [token?.userId, session]);
 
     return (
         <div className="flex flex-col gap-4">

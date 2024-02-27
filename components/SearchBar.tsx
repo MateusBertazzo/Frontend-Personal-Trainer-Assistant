@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useState, ChangeEvent } from "react";
 import { useSession } from "next-auth/react";
 import DecodedToken from "../app/utils/token/decodedToken";
-import Link from "next/link";
 import { IoMdAddCircle } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { FiXCircle } from "react-icons/fi";
@@ -23,6 +22,7 @@ interface User {
 }
 
 export default function SearchBar() {
+
     // States
     const [students, setStudents] = useState<User[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -41,8 +41,8 @@ export default function SearchBar() {
     useEffect(() => {
         const responseData = async () => {
             try {
-                 
-                 // se session ainda nao estiver carregada, nao faz o fetch
+
+                // se session ainda nao estiver carregada, nao faz o fetch
                 if (!session) {
                     return;
                 }
@@ -57,7 +57,7 @@ export default function SearchBar() {
  
                  // se a resposta nao for ok, lança um erro
                 if (!response.ok) {
-                    throw new Error("Erro ao buscar alunos");
+                    throw new Error("Erro ao buscar alunos CATCH");
                 }
                 
                 // Data da resposta
@@ -70,7 +70,9 @@ export default function SearchBar() {
                  throw new Error("Erro ao buscar alunos CATCH");
             }
         }
+
         responseData();
+
     }, [token?.userId, session]);
 
     // Método para associar aluno a um personal
@@ -79,6 +81,7 @@ export default function SearchBar() {
              
             // se session ainda nao estiver carregada, nao faz o fetch
            if (!session) {
+               console.log('session nao carregada');
                return;
            }
            
@@ -97,6 +100,8 @@ export default function SearchBar() {
            
            // Data da resposta
            const data = await response.json();
+
+           console.log(data);
         } catch (error) {
             throw new Error("Erro ao associar aluno");
         }
@@ -136,7 +141,8 @@ export default function SearchBar() {
         if (searchTerm.trim() !== '') {
             return student.username.toLowerCase().includes(searchTerm.toLowerCase()); 
         }
-    }).slice(0, 4)
+
+    }).slice(0, 4);
 
     return (
         <div className="flex flex-col items-center gap-4">
