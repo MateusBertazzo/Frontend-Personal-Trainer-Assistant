@@ -6,6 +6,7 @@ import DecodedToken from "../app/utils/token/decodedToken";
 import { IoMdAddCircle } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { FiXCircle } from "react-icons/fi";
+import { useStudents } from "../providers/StudentsProvider";
 
 // Definindo a interface do usuário que é oque é retornado da requisição
 interface User {
@@ -24,10 +25,11 @@ interface User {
 export default function SearchBar() {
 
     // States
-    const [students, setStudents] = useState<User[]>([]);
+    const [profile, setProfile] = useState<User[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     // Hooks
+    const data = useStudents();
     const { data: session } = useSession();
 
     // decodificando o token
@@ -64,7 +66,7 @@ export default function SearchBar() {
                 const data = await response.json();
                 
                 // Setando os alunos
-                setStudents(data.response);
+                setProfile(data.response);
  
             } catch (error) {
                  throw new Error("Erro ao buscar alunos CATCH");
@@ -101,7 +103,6 @@ export default function SearchBar() {
            // Data da resposta
            const data = await response.json();
 
-           console.log(data);
         } catch (error) {
             throw new Error("Erro ao associar aluno");
         }
@@ -128,18 +129,19 @@ export default function SearchBar() {
            if (!response.ok) {
                throw new Error("Erro ao associar aluno");
            }
-           
+
+           data?.setStudents(prevStudents => prevStudents.filter(student => student.userId !== alunoId));
         } catch (error) {
             throw new Error("Erro ao associar aluno");
         }
     }
 
     // Filtrando os dados
-    const filteredData = students.filter((student) => {
+    const filteredData = profile.filter((profile) => {
 
         // Só retornara os alunos se o campo de não estiver vazio e se o nome do aluno for igual ao que foi digitado
         if (searchTerm.trim() !== '') {
-            return student.username.toLowerCase().includes(searchTerm.toLowerCase()); 
+            return profile.username.toLowerCase().includes(searchTerm.toLowerCase()); 
         }
 
     }).slice(0, 4);
