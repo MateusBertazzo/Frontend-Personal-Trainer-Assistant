@@ -82,26 +82,46 @@ export default function SearchBar() {
         try {
              
             // se session ainda nao estiver carregada, nao faz o fetch
-           if (!session) {
-               console.log('session nao carregada');
-               return;
-           }
+            if (!session) {
+                console.log('session nao carregada');
+                return;
+            }
            
            // Fazendo a requisição
-           const response = await fetch(`http://localhost:8080/personal/${personalId}/associate-user/${alunoId}`, {
-               method: 'POST',
-               headers: {
-                   Authorization: `Bearer ${session?.response}`,
-               }
-           });
+            const response = await fetch(`http://localhost:8080/personal/${personalId}/associate-user/${alunoId}`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${session?.response}`,
+                }
+            });
 
             // se a resposta nao for ok, lança um erro
-           if (!response.ok) {
-               throw new Error("Erro ao associar aluno");
-           }
+            if (!response.ok) {
+                throw new Error("Erro ao associar aluno");
+            }
            
-           // Data da resposta
-           const data = await response.json();
+            // adicionando o aluno associado no students para atualizar a lista dinamicamente
+            data?.setStudents(prevStudents => {
+            const updatedStudents = [...prevStudents];
+            
+            // pego o aluno que foi associado
+            const aluno = profile.find(student => student.userId === alunoId);
+            
+            // verifico se o aluno existe
+            if (aluno) {
+
+                // verifico se o aluno ja esta associado se estiver não adiciono
+                if (updatedStudents.find(student => student.userId === alunoId)) {
+                    return updatedStudents;
+                }
+                
+                // adiciono o aluno
+                updatedStudents.push(aluno);
+            }
+
+            // retorno os alunos
+            return updatedStudents;
+        });   
 
         } catch (error) {
             throw new Error("Erro ao associar aluno");
@@ -113,24 +133,24 @@ export default function SearchBar() {
         try {
              
             // se session ainda nao estiver carregada, nao faz o fetch
-           if (!session) {
-               return;
-           }
+            if (!session) {
+                return;
+            }
            
-           // Fazendo a requisição
-           const response = await fetch(`http://localhost:8080/personal/${alunoId}/dissociate-user`, {
-               method: 'POST',
-               headers: {
-                   Authorization: `Bearer ${session?.response}`,
-               }
-           });
+            // Fazendo a requisição
+            const response = await fetch(`http://localhost:8080/personal/${alunoId}/dissociate-user`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${session?.response}`,
+                }
+            });
 
             // se a resposta nao for ok, lança um erro
-           if (!response.ok) {
-               throw new Error("Erro ao associar aluno");
-           }
+            if (!response.ok) {
+                throw new Error("Erro ao associar aluno");
+            }
 
-           data?.setStudents(prevStudents => prevStudents.filter(student => student.userId !== alunoId));
+            data?.setStudents(prevStudents => prevStudents.filter(student => student.userId !== alunoId));
         } catch (error) {
             throw new Error("Erro ao associar aluno");
         }
