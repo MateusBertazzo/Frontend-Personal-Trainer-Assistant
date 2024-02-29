@@ -83,7 +83,6 @@ export default function SearchBar() {
              
             // se session ainda nao estiver carregada, nao faz o fetch
             if (!session) {
-                console.log('session nao carregada');
                 return;
             }
            
@@ -150,6 +149,7 @@ export default function SearchBar() {
                 throw new Error("Erro ao associar aluno");
             }
 
+            // removendo o aluno associado no students para atualizar a lista dinamicamente
             data?.setStudents(prevStudents => prevStudents.filter(student => student.userId !== alunoId));
         } catch (error) {
             throw new Error("Erro ao associar aluno");
