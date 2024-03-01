@@ -169,17 +169,17 @@ export default function SearchBar() {
     return (
         <div className="flex flex-col items-center gap-4">
             <div className="flex relative">
-                <IoSearch size={28} className="absolute left-1 self-center text-gray-400" />
+                <IoSearch size={28} className="absolute left-1 self-center text-white-400" />
                 <input
                     type="text"
-                    className="w-full h-10 border border-gray-300 rounded-full bg-gray-200 pl-10 outline-none"
+                    className="w-full h-10 border border-black rounded-full bg-white pl-10 outline-none"
                     onChange={handleSearch}
                     placeholder="Buscar..."
                 />
             </div>
 
-            <div className="flex flex-col">
-                <ul className="flex flex-wrap">
+            <div className="flex flex-col ">
+                <ul className="flex flex-wrap bg-white rounded-md px-2 py-2">
                     {filteredData.map((result, index) => (
                         <li key={result.userId} className="flex">
                             <div className="flex gap-2 justify-center items-center">
