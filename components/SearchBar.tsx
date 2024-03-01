@@ -164,7 +164,7 @@ export default function SearchBar() {
             return profile.username.toLowerCase().includes(searchTerm.toLowerCase()); 
         }
 
-    }).slice(0, 4);
+    }).slice(0, 2);
 
     return (
         <div className="flex flex-col items-center gap-4">
@@ -178,27 +178,27 @@ export default function SearchBar() {
                 />
             </div>
 
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col">
                 <ul className="flex flex-wrap">
                     {filteredData.map((result, index) => (
-                        <li key={result.userId} className="flex w-1/2 text-center gap-1 py-2">
-                            <div className="flex w-full gap-3 items-center">
+                        <li key={result.userId} className="flex">
+                            <div className="flex gap-2 justify-center items-center">
                                 <div className="flex items-center">
                                     <CgProfile size={40} className="self-center cursor-pointer" />
                                     <p className="flex">{`${result.username}`}</p>
                                 </div>
                                 
-                                <IoMdAddCircle
-                                    onClick={() => handleClickAdd(token?.userId as number, result.userId)}
-                                    size={38}
-                                    className="self-center text-green-600 rounded-full cursor-pointer"
-                                />
-                
-                                <FiXCircle
-                                    onClick={() => handleClickRemove(result.userId)}
-                                    size={38}
-                                    className="self-center text-red-500 rounded-full cursor-pointer"
-                                />
+                                <button onClick={() => handleClickAdd(token?.userId as number, result.userId)}>
+                                    <span className="self-center px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-500">
+                                        Adicionar aluno
+                                    </span>
+                                </button>
+
+                                <button onClick={() => handleClickRemove(result.userId)}>
+                                    <span className="self-center px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-500">
+                                        Remover aluno
+                                    </span>
+                                </button>
                             </div>
                         </li>
                     ))}
