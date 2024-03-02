@@ -164,41 +164,41 @@ export default function SearchBar() {
             return profile.username.toLowerCase().includes(searchTerm.toLowerCase()); 
         }
 
-    }).slice(0, 4);
+    }).slice(0, 2);
 
     return (
         <div className="flex flex-col items-center gap-4">
             <div className="flex relative">
-                <IoSearch size={28} className="absolute left-1 self-center text-gray-400" />
+                <IoSearch size={28} className="absolute left-1 self-center text-white-400" />
                 <input
                     type="text"
-                    className="w-full h-10 border border-gray-300 rounded-full bg-gray-200 pl-10 outline-none"
+                    className="w-full h-10 border border-black rounded-full bg-white pl-10 outline-none"
                     onChange={handleSearch}
                     placeholder="Buscar..."
                 />
             </div>
 
-            <div className="flex flex-col items-center gap-4">
-                <ul className="flex flex-wrap">
+            <div className="flex flex-col ">
+                <ul className="flex flex-wrap bg-white rounded-md px-2 py-2">
                     {filteredData.map((result, index) => (
-                        <li key={result.userId} className="flex w-1/2 text-center gap-1 py-2">
-                            <div className="flex w-full gap-3 items-center">
+                        <li key={result.userId} className="flex">
+                            <div className="flex gap-2 justify-center items-center">
                                 <div className="flex items-center">
                                     <CgProfile size={40} className="self-center cursor-pointer" />
                                     <p className="flex">{`${result.username}`}</p>
                                 </div>
                                 
-                                <IoMdAddCircle
-                                    onClick={() => handleClickAdd(token?.userId as number, result.userId)}
-                                    size={38}
-                                    className="self-center text-green-600 rounded-full cursor-pointer"
-                                />
-                
-                                <FiXCircle
-                                    onClick={() => handleClickRemove(result.userId)}
-                                    size={38}
-                                    className="self-center text-red-500 rounded-full cursor-pointer"
-                                />
+                                <button onClick={() => handleClickAdd(token?.userId as number, result.userId)}>
+                                    <span className="self-center px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-500">
+                                        Adicionar aluno
+                                    </span>
+                                </button>
+
+                                <button onClick={() => handleClickRemove(result.userId)}>
+                                    <span className="self-center px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-500">
+                                        Remover aluno
+                                    </span>
+                                </button>
                             </div>
                         </li>
                     ))}
