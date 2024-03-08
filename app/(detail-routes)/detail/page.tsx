@@ -24,6 +24,7 @@ export default function Detail() {
         const fetchDetailUser = async () => {
             try {
 
+                // se a sessão não existir, não faz o fetch
                 if (!session) {
                     return;
                 }
@@ -37,13 +38,13 @@ export default function Detail() {
 
                 const data = await response.json();
 
+                // se a resposta não for ok, lança um erro
                 if (!response.ok) {
                     throw new Error('Erro ao buscar Profile de aluno');
                 }
 
                 setData(data.response);
 
-                console.log(data.response);
             } catch (error) {
                 throw new Error('Erro ao buscar Profile de aluno');
             }
