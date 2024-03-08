@@ -1,10 +1,55 @@
+'use client';
+
 import Image from "next/image";
 import { MdAlternateEmail } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
-
+import { useEffect, useState } from "react";
+import { useSession } from 'next-auth/react';
+import DecodedToken from "../../utils/token/decodedToken";
 
 export default function Detail() {
+    // States
+    const [data, setData] = useState({});
+
+    // Hooks
+    const { data: session } = useSession();
+    
+    // decodificando o token
+    const token = DecodedToken(session?.response as string);
+
+    useEffect(() => {
+        const fetchDetailUser = async () => {
+            try {
+
+                if (!session) {
+                    return;
+                }
+
+                const response = await fetch(`http://localhost:8080/profiles/get/${token?.userId}`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${session?.response}`,
+                    }
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar Profile de aluno');
+                }
+
+                setData(data);
+
+                console.log(data);
+            } catch (error) {
+                throw new Error('Erro ao buscar Profile de aluno');
+            }
+        }
+
+        fetchDetailUser();
+    }, [token?.userId, session]);
+
     return (
         <div className="flex flex-col justify-center items-center bg-gray-200 gap-2">
             <Image 
