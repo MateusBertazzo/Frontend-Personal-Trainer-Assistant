@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import DecodedToken from '../app/utils/token/decodedToken';
 import { ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
 
 // Tipagem do aluno(response da requisição)
 interface Aluno {
@@ -31,6 +32,7 @@ export const StudentsProvider: React.FC<{ children: ReactNode }> = ({ children }
     // Hooks
     // useSession é um hook do next-auth que retorna o estado da sessão do usuário
     const { data: session } = useSession();
+    const  pathname  = usePathname();
 
     // decodificando o token
     const token = DecodedToken(session?.response as string);
@@ -39,6 +41,10 @@ export const StudentsProvider: React.FC<{ children: ReactNode }> = ({ children }
         const fetchStudents = async () => {
             try {
 
+                // se a rota nao for /home, nao faz o fetch
+                if (pathname !== "/home") {
+                   return;     
+                }
                 // se session ainda nao estiver carregada, nao faz o fetch
                 if (!session) {
                     return;

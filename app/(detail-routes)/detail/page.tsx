@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { MdAlternateEmail } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
-import { IoAddCircle } from "react-icons/io5";
 import { MdAddCircle } from "react-icons/md";
 
 
