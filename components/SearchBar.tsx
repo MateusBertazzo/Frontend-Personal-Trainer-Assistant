@@ -164,30 +164,34 @@ export default function SearchBar() {
             return profile.username.toLowerCase().includes(searchTerm.toLowerCase()); 
         }
 
-    }).slice(0, 2);
+    }).slice(0, 4);
 
     return (
         <div className="flex flex-col items-center gap-4">
             <div className="flex relative">
-                <IoSearch size={28} className="absolute left-1 self-center text-white-400" />
+                
                 <input
                     type="text"
-                    className="w-full h-10 border border-black rounded-full bg-white pl-10 outline-none"
+                    className="w-full p-4 h-10 border border-black rounded-full bg-white pl-10 outline-none"
                     onChange={handleSearch}
                     placeholder="Buscar..."
                 />
+                <button className="absolute right-1 top-1/2 -translate-y-1/2 p-4 rounded-full">
+                    <IoSearch size={28}/>
+                </button>
             </div>
 
-            <div className="flex flex-col ">
-                <ul className="flex flex-wrap bg-white rounded-md px-2 py-2">
-                    {filteredData.map((result, index) => (
-                        <li key={result.userId} className="flex">
-                            <div className="flex gap-2 justify-center items-center">
-                                <div className="flex items-center">
-                                    <CgProfile size={40} className="self-center cursor-pointer" />
-                                    <p className="flex">{`${result.username}`}</p>
+            {
+                searchTerm.length > 0 && (
+                    <div className="absolute top-36 p-4 bg-white w-96 text-white rounded-xl left-1/2 -translate-x-1/2 flex flex-col gap-2">
+                        {filteredData.map((result, index) => (
+
+                            <div className="flex gap-3" key={index}>
+                                <div className="flex gap-1">
+                                    <CgProfile size={40} className="text-black" />
+                                    <p className="flex self-center text-black">{`${result.username}`}</p>
                                 </div>
-                                
+
                                 <button onClick={() => handleClickAdd(token?.userId as number, result.userId)}>
                                     <span className="self-center px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-500">
                                         Adicionar aluno
@@ -200,10 +204,11 @@ export default function SearchBar() {
                                     </span>
                                 </button>
                             </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                        ))}
+                    </div>
+                )
+            }
+            
         </div>
     )
 }

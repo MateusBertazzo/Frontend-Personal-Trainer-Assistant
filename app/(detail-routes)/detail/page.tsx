@@ -55,7 +55,7 @@ export default function Detail() {
     }, [token?.userId, session]);
 
     return (
-        <div className="flex flex-col justify-center items-center bg-gray-200 gap-2 w-screen px-1 pb-16">
+        <div className="flex flex-col justify-center items-center bg-gray-200 gap-2 w-screen">
             <Image 
                 src="/students.jpeg"
                 alt="foto aluno"

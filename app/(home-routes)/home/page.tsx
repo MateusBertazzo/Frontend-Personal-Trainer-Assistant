@@ -12,8 +12,8 @@ export default function Home() {
             <div className='flex flex-col gap-4 px-2 mt-2'>
                 <SearchBar />
                 <Students />
+                <Footer />
             </div>
-            <Footer />
         </div>
     );
 }
