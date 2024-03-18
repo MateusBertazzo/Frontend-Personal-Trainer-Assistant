@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useSession } from 'next-auth/react';
 import DecodedToken from "../../utils/token/decodedToken";
 import  UserDetails  from "../../../types/next-auth";
+import Footer from "../../../components/Footer";
 
 
 export default function Detail() {
@@ -54,17 +55,17 @@ export default function Detail() {
     }, [token?.userId, session]);
 
     return (
-        <div className="flex flex-col justify-center items-center bg-gray-200 gap-2">
+        <div className="flex flex-col justify-center items-center bg-gray-200 gap-2 w-screen px-1 pb-16">
             <Image 
                 src="/students.jpeg"
                 alt="foto aluno"
-                width={200}
-                height={200}
+                width={286}
+                height={180}
                 className="rounded-xl py-2"
             />
 
             {/*Informações do Aluno */}
-            <div className="flex flex-col shadow-md bg-white w-48 gap-2 rounded-md px-2 py-2 ">
+            <div className="flex flex-col shadow-md bg-white w-80 gap-2 rounded-md px-2 py-2 ">
                 <div className="flex flex-col">
                     <h1 className="font-bold text-orange-600">{data?.username}</h1>
                     <span className="text-gray-400 text-xs mb-1">{`Aluno desde ${data?.userMetrics.dataStart}`}</span>
@@ -86,7 +87,7 @@ export default function Detail() {
             </div>
 
             {/*Objetivo do Aluno */}
-            <div className="flex flex-col shadow-md bg-white w-48 gap-2 rounded-md px-2 py-2">
+            <div className="flex flex-col shadow-md bg-white w-80 gap-2 rounded-md px-2 py-2">
                 <h2 className="font-semibold">Objetivos</h2>
 
                 <div className="flex gap-2">
@@ -96,7 +97,7 @@ export default function Detail() {
             </div>
 
             {/*Métricas do Aluno */}
-            <div className="flex flex-col shadow-md bg-white w-48 gap-2 rounded-md px-2 py-2">
+            <div className="flex flex-col shadow-md bg-white w-80 gap-2 rounded-md px-2 py-2">
                 <h2 className="font-semibold">Métricas do aluno</h2>
                 <div>
                     <h3 className="text-orange-600 font-bold">Braço</h3>
@@ -142,6 +143,11 @@ export default function Detail() {
                     </div>
                 </div>
             </div>
+
+            <div className="flex flex-col my-1">
+                <Footer />
+            </div>
+            
         </div>
     );
 }
